@@ -1,0 +1,9 @@
+
+import request from 'common/request';
+//
+export async function getUserInfoUrl(){
+	return await request({
+		method: 'get',
+		url: 'http://localhost:3000/users'
+	})
+}

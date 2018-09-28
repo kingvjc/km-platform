@@ -7,8 +7,12 @@ import Elementui from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'babel-polyfill';
 import store from 'vuex/store';
+import vueQuillEditor from 'vue-quill-editor';
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
 
 Vue.use(Elementui);
+Vue.use(vueQuillEditor);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

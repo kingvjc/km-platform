@@ -93,6 +93,7 @@ export default {
         @current-change="handleCurrentChange"
         :current-page="pageOptions.pageNum"
         :page-sizes="pageOptions.pageSizeList"
+        :page-size="pageOptions.pageSize"
         layout="total, sizes, prev, pager, next"
         :total="pageOptions.total"
         style="text-align:right"

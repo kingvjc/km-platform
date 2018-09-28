@@ -1,0 +1,9 @@
+CACHE MANIFEST
+#需要缓存的文件
+http://img4.imgtn.bdimg.com/it/u=1952016862,1880307894&fm=26&gp=0.jpg
+
+NETWORK：
+#不被缓存的文件
+
+FALLBACK
+# 当页面无法访问时额回退页面

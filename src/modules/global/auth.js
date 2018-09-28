@@ -1,5 +1,10 @@
-
+/**
+ * @file 权限校验
+ *
+ * @author chuntyang
+ */
 import store from 'vuex/store';
+
 export async function getUserAuth() {
 	if (!store.getters.userIsLogin) {
 		try {
@@ -7,7 +12,9 @@ export async function getUserAuth() {
 		} catch (e) {
 			throw e;
 		}
-		return false;
 	}
+	if (!store.getters.userIsLogin) {
+        return false;
+    }
 	return true;
 }

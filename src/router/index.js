@@ -8,26 +8,54 @@ Vue.use(Router)
 
 const home = {
 	path: '/',
-	redirect: to => {
-		return 'name-rules';
-	},
 	name: 'home',
+	meta: {
+		requiresAuth: true
+	},
+	component(resolve) {
+		require.ensure([], () => resolve(require('../modules/home')));
+	}
 }
+const root = {
+    path: '/',
+    redirect: '/name-rules',
+    children: []
+};
+// 404 page
+const notFound = {
+	path: '/notFound',
+	name: 'notFound',
+	meta: {
+		requiresAuth: false
+	},
+	component(resolve) {
+		require.ensure([], () => resolve(require('../modules/notFound')));
+	}
+}
+
 const router = new Router({
-    routes: [home, nameRules, questionShare]
+	linkActiveClass: 'active',
+    routes: [home, notFound, nameRules, questionShare]
 });
-//登录前判断路由的跳转
-// router.beforeEach(async (to, from, next) => {
-// 	console.log(to.matched.some(recode => recode.meta.requiredAuth));
-// 	if (to.matched.some(recode => recode.meta.requiresAuth)) {
-// 		const hasAuth = await getUserAuth();
-// 		console.log(hasAuth);
-// 		if (!hasAuth) {
-// 			next(false);
-// 			return;
-// 		} else {
-// 			next()
-// 		}
-// 	}
-// })
+//登录前判断路由的跳转以及权限校验
+router.beforeEach(async (to, from, next) => {
+	//404 page
+	if (to.matched.length <= 0) {
+		// router.push({name: 'notFound'});
+		return;
+	}
+	// if (to.meta.requiresQuery && to.meta.requiresQuery.some(q => !to.query[q])) {
+    //     console.warn('[router] query unmet: ', from.path, to.path, to.query);
+    //     next(false);
+    //     return;
+    // }
+	if (to.matched.some(recode => recode.meta.requiresAuth)) {
+		const hasAuth = await getUserAuth();
+		if (!hasAuth) {
+			next(false);
+			return;
+		}
+	}
+	next();
+})
 export default router;

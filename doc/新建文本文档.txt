@@ -1,2 +1,0 @@
-npm run dev  ´úÂëÆô¶¯
-npm run build ´úÂë±àÒë

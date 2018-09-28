@@ -1,8 +1,8 @@
 let codeOption = {
 	codeList: [],
 	pageQuery: {
-		pageSizeList: [10,20,40],
-		pageSize: 10,
+		pageSizeList: [20,40,60],
+		pageSize: 40,
 		pageNum: 1,
 		total: 1
 	},

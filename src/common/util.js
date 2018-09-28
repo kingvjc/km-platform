@@ -1,8 +1,14 @@
+/**
+ * @file 公共的配置
+ *
+ * @author chuntyang
+ */
+export const contentType = 'Content-Type'
 
 export function formUrl(url, domain=location.host, urlConfig = urlConfig) {
-	if (domain === 'localhost:8080') {
-	    url='http://localhost:3000' + url;
-	 }
+	// if (domain === 'localhost:8080') {
+	//     url='http://localhost:3000' + url;
+	//  }
 	 return url;
 }
 /**
@@ -54,4 +60,9 @@ export function formParams(params) {
             delete params[k];
         }
     }
+}
+
+export const formatHeader = {
+    default: 'application/x-www-form-urlencoded',
+    json: 'application/json' 
 }

@@ -1,31 +1,23 @@
+
 <script>
-import {mapGetters} from 'vuex';
-// import personInfo from './personInfo';
 export default {
 	created() {
 	},
 	data() {
-		return {
-		}
-	},
+        return {
+        }
+    },
 	methods: {
-
 	},
 	computed: {
-		...mapGetters('personCenter', {
-		})
-	},
-	components: {
 	}
 }
 </script>
-
 <template>
-<div class="question-share">
-问题分享
+<div class="name-rules">
+    <router-view></router-view>
 </div>
-</template>y
-
+</template>
 <style scoped lang="stylus">
-</style>
 
+</style>

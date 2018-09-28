@@ -1,7 +1,8 @@
-import {getTimeStr} from '../../common/util';
+
 const codeColumns = [{
 	prop: 'id',
-	label: 'id'
+	label: 'id',
+	width: '130'
 }, {
 	prop: 'code',
 	label: '字段'

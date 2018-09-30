@@ -29,6 +29,7 @@ export default {
 	path: '/name-rules',
 	name: 'nameRules',
 	redirect: '/name-rules/center',
+	icon: 'el-icon-edit',
 	meta: {
 
 		requiresAuth: true,

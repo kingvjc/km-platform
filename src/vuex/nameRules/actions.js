@@ -22,3 +22,8 @@ export async function deleteCode({}, id) {
 export async function editCode({}, params) {
 	return await Api.editCodeUrl(params);
 }
+// jsonpTest
+export async function jsonpTest({}, params) {
+	let data = await Api.jsonptestUrl({});
+	console.log(data);
+}

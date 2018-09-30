@@ -2,6 +2,7 @@
  * @file 请求封装
  *
  * @author chuntyang
+ * Aug 10, 2018
  */
 import 'isomorphic-fetch';
 import errMessage from './errorMessage';
@@ -9,7 +10,6 @@ import {formUrl,formParams, formatHeader, contentType} from './util';
 let header = {
 	    'Accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
-      // 'Cache-Control': 'no-cache',
       'x-requested-with': 'fetch'
 
 }
@@ -44,7 +44,6 @@ export default  function request(params) {
 	}
   return new Promise((resolve, reject) => {
       fetch(url, reqheader).then(response => {
-        debugger;
           if (response.status !== 200) {
               errMessage.$emit('requestError', '请求异常');
               reject(response);

@@ -1,15 +1,25 @@
 <script>
 /**
  * @file table组件
- * Dec 6, 2017
+ * @author chuntyang
+ * July 15, 2018
+ * columns           列
+ * data              表格数据
+ * isPage            是否分页 默认为true 分页
+ * height            表格高度，只有当fullScreenHeight为false时才有效
+ * selectEvent       多选事件
+ * pageOptions       页码相关
+ * searchEvent       表格搜索事件
+ * fullScreenHeight  是否铺满整个屏幕
  */
 import {fixTableHeight} from './dom';
 export default {
     created() {
+        this.windowResize();
     },
     data() {
         return {
-            tableHeight: null,
+            tableHeight: null
         };
     },
     props: {
@@ -27,23 +37,41 @@ export default {
         selectEvent: {
             type: Function
         },
-        initPageOptions: {
-            type: Function
-        },
         pageOptions: {
-            type: Object
+            type: Object,
+            // 添加pagenation默认值
+            default: () => {
+                return {
+                    total: 0,
+                    pageSize: 20,
+                    currentPage: 1,
+                    pageSizeList: [20, 40, 60]
+                };
+            }
         },
         searchEvent: {
             type: Function
+        },
+        fullScreenHeight: {
+            type: Boolean,
+            default: () => true
+        },
+        height: {
+            type: String
+        },
+        isPage: {
+            type: Boolean,
+            default: () => true
         }
     },
     methods: {
-        handleCurrentChange(pageNum) {
-            this.initPageOptions({pageNum});
+        handleCurrentChange(currentPage) {
+            this.pageOptions.currentPage = currentPage;
             this.searchEvent();
         },
         pageSize(pageSize) {
-            this.initPageOptions({pageSize, pageNum: 1});
+            this.pageOptions.pageSize = pageSize;
+            this.pageOptions.currentPage = 1;
             this.searchEvent();
         },
         toggleSelection(rows) {
@@ -54,6 +82,20 @@ export default {
             } else {
                 this.$refs.tableRef.clearSelection();
             }
+        },
+        windowResize() {
+            const self = this;
+            window.onresize = function () {
+                self.initTableHeight();
+            };
+        },
+        initTableHeight() {
+            if (this.fullScreenHeight) {
+                const pageHeight = this.isPage ? 60 : 15;
+                this.tableHeight = fixTableHeight(this.$refs.tableRef.$el, pageHeight);
+            } else if (this.height) {
+                this.tableHeight = this.height;
+            }
         }
     },
     computed: {
@@ -62,7 +104,7 @@ export default {
         }
     },
     mounted() {
-        this.tableHeight = fixTableHeight(this.$refs.tableRef.$el, 70);
+        this.initTableHeight();
     }
 };
 </script>
@@ -70,10 +112,11 @@ export default {
 <template>
 <div class="my-table">
 <el-table :data="data" :height="tableHeight" border ref="tableRef" @selection-change="handleSelectEvent">
-    <el-table-column type="selection" width="55" align="center" solt="selectId" v-if="selectEvent"></el-table-column>
-    <slot name="id"></slot>
+    <el-table-column fixed type="selection" width="55" align="center" solt="selectId" v-if="selectEvent"></el-table-column>
     <template v-for="column in columns">
-        <el-table-column
+        <slot v-if="column.slot" :name="column.slot"></slot>
+        <el-table-column v-else-if="!column.hidden"
+         :key="column.name"
          :type="column.type"
          :property="column.prop"
          :label="column.label"
@@ -84,14 +127,14 @@ export default {
          align="center">
         </el-table-column>
     </template>
-    <slot name="btn-operate"></slot>
 </el-table>
-<br/>
+<br>
+
 <footer class="footer-pagination" v-if="pageOptions.total">
     <el-pagination
         @size-change="pageSize"
         @current-change="handleCurrentChange"
-        :current-page="pageOptions.pageNum"
+        :current-page="pageOptions.currentPage"
         :page-sizes="pageOptions.pageSizeList"
         :page-size="pageOptions.pageSize"
         layout="total, sizes, prev, pager, next"
@@ -101,9 +144,11 @@ export default {
 </footer>
 </div>
 </template>
-<style lang="stylus" scoped>
-.my-table
-    margin-top 20px
-table th
-    padding 6px 0
+<style scoped lang="stylus">
+.my-table {
+    margin-top: 20px;
+    table th {
+        padding: 6px 0;
+    }
+}
 </style>

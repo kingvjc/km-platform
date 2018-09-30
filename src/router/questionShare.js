@@ -40,6 +40,7 @@ export default {
 	path: '/question-share',
 	name: 'questionShare',
 	redirect: '/question-share/list',
+	icon: 'el-icon-setting',
 	meta: {
 		requiresAuth: true,
 		label: '问题管理'

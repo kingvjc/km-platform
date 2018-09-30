@@ -1,5 +1,6 @@
 
 import request from 'common/request';
+import jsonp from 'common/jsonp';
 //
 export async function codeListUrl(params){
 	return await request({
@@ -29,3 +30,11 @@ export async function editCodeUrl(params){
 		params: params
 	})
 }
+export async function jsonptestUrl(params){
+	return new Promise(function(resolve, reject) {
+		jsonp('http://localhost:3000/api/jsonp', params, function(data){
+			resolve(data);
+		});
+	})
+}
+

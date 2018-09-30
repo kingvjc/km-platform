@@ -7,6 +7,7 @@ import {mapActions, mapMutations, mapGetters} from 'vuex';
 export default {
 	created() {
 		this.getCodeList();
+		this.jsonpTest();
 		// console.log('测试协商缓存');
 	},
 	data() {
@@ -28,7 +29,7 @@ export default {
 				this.$refs.edit.modelStatus(true);
 			});
 		},
-		...mapActions('nameRules',['getCodeList', 'deleteCode', 'editCode']),
+		...mapActions('nameRules',['getCodeList', 'deleteCode', 'editCode','jsonpTest']),
 		...mapMutations('nameRules', {
 			initCodePage: 'INIT_CODE_PAGE'
 		})

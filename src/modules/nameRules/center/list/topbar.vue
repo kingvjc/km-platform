@@ -37,6 +37,9 @@ export default {
 			this.$message.success('文件上传成功');
 			this.handlerCodeSearch();
 		},
+		download() {
+			location.href = "http://localhost:3000/api/download";
+		},
 		...mapActions('nameRules', ['addCode']),
 		...mapMutations('nameRules', {
 			changeCodeValue: 'CHANGE_CODE_VALUE'
@@ -79,6 +82,7 @@ export default {
 	    </el-col>
 	    <el-col :span="4">
 	        <el-button type="success" size="small" @click="handlerCodeSearch">搜索</el-button>
+	        <el-button type="success" size="small" @click="download">download</el-button>
 	    </el-col>
 	</el-row>
 	<edit ref="edit" 
